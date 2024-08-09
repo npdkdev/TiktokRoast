@@ -14,7 +14,7 @@ const rateLimiter = new RateLimiterMemory({
   duration: 720, // seconds
 });
 
-const formatData = (obj) => {
+const formatData = (obj: {}) => {
   let biodata = ""
   Object.keys(obj).forEach(key => {
     const title = key.replace(/_/g, ' ')
