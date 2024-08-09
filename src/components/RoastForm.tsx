@@ -17,7 +17,9 @@ export default function RoastForm() {
     setError("");
     try {
       const profile = await roastTiktok(username);
-      setAvatar(profile.avatar)
+      if (profile.avatar) {
+        setAvatar(profile.avatar)
+      }
       const response = await axios.post(
         "/api/generate-roast",
         {

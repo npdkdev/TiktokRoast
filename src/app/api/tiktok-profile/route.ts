@@ -34,6 +34,9 @@ async function getTiktokProfile(username: string) {
   const jsonString = $('#__UNIVERSAL_DATA_FOR_REHYDRATION__').html();
 
   // Parse the JSON string into a JavaScript object
+  if (!jsonString) {
+    throw new Error('Not found data')
+  }
   const jsonData = JSON.parse(jsonString);
   const dataJson = jsonData.__DEFAULT_SCOPE__
   const userDetail = dataJson['webapp.user-detail'].userInfo;
