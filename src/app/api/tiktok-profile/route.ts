@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import * as cheerio from "cheerio";
-import {data} from "cheerio/lib/api/attributes";
 
 export async function GET(request: NextRequest) {
   const username = request.nextUrl.searchParams.get("username");
