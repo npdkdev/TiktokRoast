@@ -1,4 +1,6 @@
 import RoastForm from "@/components/RoastForm";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
 
 export default function Home() {
   return (
@@ -9,6 +11,8 @@ export default function Home() {
         </h1>
         <RoastForm />
       </div>
+    <Analytics/>
+    <SpeedInsights/>
       <footer className="text-center m-8">
         <p>
           Developed by{" "}
