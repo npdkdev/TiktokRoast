@@ -45,7 +45,7 @@ async function getTiktokProfile(username: string) {
   }
   const joined_at= new Date((userDetail['user']['createTime'] * 1000));
   const last_edited_name= new Date((userDetail['user']['nickNameModifyTime'] * 1000));
-  const options = {
+  const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

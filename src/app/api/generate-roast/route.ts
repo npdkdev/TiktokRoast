@@ -14,11 +14,12 @@ const rateLimiter = new RateLimiterMemory({
   duration: 720, // seconds
 });
 
-const formatData = (obj: {}) => {
+const formatData = (objs: {}) => {
   let biodata = ""
+  const obj = objs as { [key: string]: any };
   Object.keys(obj).forEach(key => {
     const title = key.replace(/_/g, ' ')
-    const value = obj[key]
+    let value = `${obj[key]}`
     if (title){
       biodata += `${title[0].toUpperCase()+title.slice(1)}: ${value}`
     } else {
