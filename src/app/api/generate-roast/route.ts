@@ -14,6 +14,21 @@ const rateLimiter = new RateLimiterMemory({
   duration: 720, // seconds
 });
 
+const formatData = (obj) => {
+  let biodata = ""
+  Object.keys(obj).forEach(key => {
+    const title = key.replace(/_/g, ' ')
+    const value = obj[key]
+    if (title){
+      biodata += `${title[0].toUpperCase()+title.slice(1)}: ${value}`
+    } else {
+      biodata += `${title}: ${value}`
+    }
+    biodata += "\n"
+  });
+  return biodata
+}
+
 export async function POST(request: Request) {
   // Rate Limiting
   const clientIp = request.headers.get("x-forwarded-for");
@@ -40,18 +55,20 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-
+  delete profile.avatar
+  const biodata = formatData(profile)
   try {
-    let prompt = `berikan roasting singkat dengan kejam, menyindir, serta menyakitkan dalam bahasa gaul untuk profile Tiktok berikut : ${username}. Berikut detailnya: ${JSON.stringify(
-      profile
-    )}`;
-    if (profile.bio && !/[^\u0000-\u007F]/.test(profile.bio)) {
-      prompt = `give a short and harsh roasting for the following Tiktok profile: ${username}. Here are the details: ${JSON.stringify(
-        profile
-      )}`;
-    }
+    // let prompt = `berikan roasting singkat dengan kejam, menyindir, serta menyakitkan dalam bahasa gaul untuk profile Tiktok berikut : ${username}. Berikut detailnya: ${JSON.stringify(
+    //   profile
+    // )}`;
+    // if (profile.bio && !/[^\u0000-\u007F]/.test(profile.bio)) {
+    //   prompt = `give a short and harsh roasting for the following Tiktok profile: ${username}. Here are the details: ${JSON.stringify(
+    //     profile
+    //   )}`;
+    // }
     // if (profile.bio && /[^\u0000-\u007F]/.test(profile.bio)) {
-    prompt += `. (berikan response dalam bahasa indonesia dan jangan berikan pujian atau saran)`;
+    let prompt = `berikan roasting singkat dengan kejam, menyindir, serta menyakitkan dalam bahasa gaul untuk profile Tiktok berikut : ${username}. Berikut detailnya: ${biodata}`;
+    prompt += `(berikan response dalam bahasa indonesia dan jangan berikan pujian atau saran)`;
     // } else {
     //   prompt += `. (provide the response in English and do not provide praise or advice)`;
     // }

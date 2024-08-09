@@ -10,7 +10,8 @@ interface TiktokProfile {
   following?: number;
   videos?: number;
   likes?: number;
-  friends?: number
+  friends?: number;
+  joined?: string
 }
 
 async function getTiktokProfile(

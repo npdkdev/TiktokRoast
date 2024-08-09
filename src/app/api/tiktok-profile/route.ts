@@ -43,14 +43,24 @@ async function getTiktokProfile(username: string) {
   if (!userDetail) {
     throw new Error('Pengguna tidak ditemukan')
   }
+  const joined_at= new Date((userDetail['user']['createTime'] * 1000));
+  const last_edited_name= new Date((userDetail['user']['nickNameModifyTime'] * 1000));
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  const customFormattedDate = joined_at.toLocaleString('id-ID', options);
+  const customLastFormattedDate = last_edited_name.toLocaleString('id-ID', options);
   profile.name = userDetail['user']['nickname']
   profile.username = userDetail['user']['uniqueId']
   profile.bio = userDetail['user']['signature']
-  profile.created_at = userDetail['user']['createdTime']
+  profile.joined = customFormattedDate
   profile.avatar = userDetail['user']['avatarMedium']
   profile.verified = userDetail['user']['verified']
   profile.is_private = userDetail['user']['privateAccount']
-  profile.last_modified_name = userDetail['user']['nickNameModifyTime']
+  profile.last_modified_name = customLastFormattedDate
   // profile.stats = userDetail['stats']
   profile.followers = userDetail['stats'].followerCount
   profile.following = userDetail['stats'].followingCount
